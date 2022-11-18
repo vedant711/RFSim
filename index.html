@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="calc.js"></script>
+    <title>RF Simulation Tool</title>
+</head>
+<body>
+    <script>
+        let p1,p2;
+        let eplanetee_calc = (z1,z2,pin) => {
+            console.log(pin)
+            let rho1 = (z1-50)/(z1+50);
+            let rho2 = (z2-50)/(z2+50);
+            p1 = (pin/2)*(1-Math.pow(rho1,2));
+            p2 = (pin/2)*(1-Math.pow(rho2,2));
+            
+            output=document.getElementById('output');
+            output.innerHTML='<p>P1=' + String(p1) + '</p><p>P2=' + String(p2) + '</p>';
+            document.getElementById('ei').style.display='none';
+            document.getElementById('eaw').style.display='none';
+            document.getElementById('eae').style.display='none';
+        }
+
+        let select_ip_eplane_wave = (pin,il) => {
+            // eplanetee_calc(z1,z2,pin)
+            // console.log(pin)
+            let pin_value;
+            for(var i = 0; i < pin.length; i++){
+                if(pin[i].checked){
+                    pin_value = pin[i].value;
+                }
+            }
+            console.log(pin_value)
+            if (pin_value==='1') {
+                console.log(p1)
+                waveguide_calc(p1,il)
+            }
+            else {
+                console.log(p2)
+                waveguide_calc(p2,il)
+            }
+
+            
+        }
+
+        let select_ip_eplane_eplane = (pin,z1,z2) => {
+            let pin_value;
+            for(var i = 0; i < pin.length; i++){
+                if(pin[i].checked){
+                    pin_value = pin[i].value;
+                }
+            }
+            console.log(pin_value)
+            if (pin_value==='1') {
+                console.log(p1)
+                // waveguide_calc(p1,il)
+                eplanetee_calc(z1,z2,p1)
+            }
+            else {
+                console.log(p2)
+                // waveguide_calc(p2,il)
+                eplanetee_calc(z1,z2,p2)
+            }
+
+            
+        }
+
+        let select_ip_hplane_hplane = (pin,z1,z2) => {
+            let pin_value;
+            for(var i = 0; i < pin.length; i++){
+                if(pin[i].checked){
+                    pin_value = pin[i].value;
+                }
+            }
+            console.log(pin_value)
+            if (pin_value==='1') {
+                console.log(p1)
+                // waveguide_calc(p1,il)
+                hplanetee_calc(z1,z2,p1)
+            }
+            else {
+                console.log(p2)
+                // waveguide_calc(p2,il)
+                hplanetee_calc(z1,z2,p2)
+            }
+
+            
+        }
+
+        let hplanetee_calc = (z1,z2,pin) => {
+            let rho1 = (z1-50)/(z1+50);
+            let rho2 = (z2-50)/(z2+50);
+            p1 = (pin/2)*(1-Math.pow(rho1,2));
+            p2 = (pin/2)*(1-Math.pow(rho2,2));
+            
+            console.log(pin)
+            console.log(rho1,rho2)
+            console.log(p1,p2)
+            output=document.getElementById('output');
+            output.innerHTML='<p>P1=' + String(p1) + '</p><p>P2=' + String(p2) + '</p>';
+            document.getElementById('hi').style.display='none';
+            document.getElementById('haw').style.display='none';
+            document.getElementById('hah').style.display='none';
+
+        }
+
+        let waveguide_calc = (pin,il) => {
+            console.log(pin)
+            console.log(il)
+            p1 = pin*(Math.pow(10,(-il/10)))
+            output=document.getElementById('output');
+            output.innerHTML='<p>P1=' + String(p1) + '</p>';
+            document.getElementById('wi').style.display='none';
+            document.getElementById('waw').style.display='none';
+            document.getElementById('wae').style.display='none';
+        }
+
+
+    </script>
+    <div class="nav-bar">
+        <div class="nav-elements">
+            <div class="drop file">
+                <h3>File</h3>
+                <div class="drop-content file-content">
+                    <p>Export as Image</p>
+                    <p>Save</p>
+                    <p>Toggle Fullscreen</p>
+                </div>
+            </div>
+            <div class="drop draw">
+                <h3>Draw</h3>
+                <div class="drop-content draw-content">
+                    <p id="w">Waveguide</p>
+                    <p id="e">E Plane Tee</p>
+                    <p id="h">H Plane Tee</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="canvas" id="canvas">
+        <div class="wave-init" id="wi" style="display: none;">
+            <h2>Waveguide</h2>
+            <input type="number" name="p1wi" id="p1wi" placeholder="Enter Input Power">
+            <input type="number" name="ilwi" id="ilwi" placeholder="Enter Insertion Loss">
+            <button onclick="waveguide_calc(parseInt(document.getElementById('p1wi').value),parseInt(document.getElementById('ilwi').value))">Gaand ma Gaalne</button>
+
+        </div>
+        <div class="wave-after-wave" id="waw" style="display: none;">
+            <h2>Waveguide</h2>
+            <input type="number" name="ilwaw" id="ilwaw" placeholder="Enter Insertion Loss">
+            <button onclick="waveguide_calc(p1,parseInt(document.getElementById('ilwaw').value))">Gaand ma Gaalne</button>
+
+        </div>
+        <div class="wave-after-eplane" id="wae" style="display: none;">
+            <h2>Waveguide</h2>
+            <input type="radio" name="p1wae" id="p1wae" value="1">P1
+            <input type="radio" name="p1wae" id="p1wae" value="2">P2
+            <input type="number" name="ilwae" id="ilwae" placeholder="Enter Insertion Loss">
+            <button onclick="select_ip_eplane_wave(document.getElementsByName('p1wae'),parseInt(document.getElementById('ilwae').value))">Gaand ma Gaalne</button>
+        </div>
+    <!-- <script src="calc.js"></script> -->
+
+        <div class="eplane-init" id="ei" style="display: none;">
+            <h2>E Plane Tee</h2>
+            <input type="number" name="p1ei" id="p1ei" placeholder="Enter Input Power">
+            <input type="number" name="z1ei" id="z1ei" placeholder="Enter Z1">
+            <input type="number" name="z2ei" id="z2ei" placeholder="Enter Z2">
+            <button onclick="eplanetee_calc(parseInt(document.getElementById('z1ei').value),parseInt(document.getElementById('z2ei').value),parseInt(document.getElementById('p1ei').value))">Gaand ma Gaalne</button>
+        </div>
+       
+        <div class="hplane-init" id="hi" style="display: none;">
+            <h2>H Plane Tee</h2>
+            <input type="number" name="p1hi" id="p1hi" placeholder="Enter Input Power">
+            <input type="number" name="z1hi" id="z1hi" placeholder="Enter Z1">
+            <input type="number" name="z2hi" id="z2hi" placeholder="Enter Z2">
+            <button onclick="hplanetee_calc(parseInt(document.getElementById('z1hi').value),parseInt(document.getElementById('z2hi').value),parseInt(document.getElementById('p1hi').value))">Gaand ma Gaalne</button>
+
+        </div>
+        <div class="eplane-after-eplane" id="eae" style="display: none;">
+            <h2>E Plane Tee</h2>
+            <input type="radio" name="p1eae" id="p1eae" value="1">
+            <input type="radio" name="p1eae" id="p1eae" value="2">
+            <input type="number" name="z1eae" id="z1eae" placeholder="Enter Z1">
+            <input type="number" name="z2eae" id="z2eae" placeholder="Enter Z2">
+            <button onclick="select_ip_eplane_eplane(document.getElementsByName('p1eae'),parseInt(document.getElementById('z1eae').value),parseInt(document.getElementById('z2eae').value))">Gaand ma Gaalne</button>
+        </div>
+        <div class="hplane-after-hplane" id="hah" style="display: none;">
+            <h2>H Plane Tee</h2>
+            <input type="radio" name="p1hah" id="p1hah" value="1">
+            <input type="radio" name="p1hah" id="p1hah" value="2">
+            <input type="number" name="z1hah" id="z1hah" placeholder="Enter Z1">
+            <input type="number" name="z2hah" id="z2hah" placeholder="Enter Z2">
+            <button onclick="select_ip_hplane_hplane(document.getElementsByName('p1hah'),parseInt(document.getElementById('z1hah').value),parseInt(document.getElementById('z2hah').value))">Gaand ma Gaalne</button>
+
+        </div>
+        <div class="eplane-after-wave" id="eaw" style="display: none;">
+            <h2>E Plane Tee</h2>
+            <input type="number" name="z1eaw" id="z1eaw" placeholder="Enter Z1">
+            <input type="number" name="z2eaw" id="z2eaw" placeholder="Enter Z2">
+            <button onclick="eplanetee_calc(parseInt(document.getElementById('z1eaw').value),parseInt(document.getElementById('z2eaw').value),p1)">Gaand ma Gaalne</button>
+
+        </div>
+        <div class="hplane-after-wave" id="haw" style="display: none;">
+            <h2>H Plane Tee</h2>
+            <input type="number" name="z1haw" id="z1haw" placeholder="Enter Z1">
+            <input type="number" name="z2haw" id="z2haw" placeholder="Enter Z2">
+            <button onclick="hplanetee_calc(parseInt(document.getElementById('z1haw').value),parseInt(document.getElementById('z2haw').value),p1)">Gaand ma Gaalne</button>
+
+        </div>
+
+        <!-- <div class="waveguide" id="waveguide">
+            <div class="line"></div>
+            <div class="rectangle"></div>
+            <div class="line"></div>
+        </div> -->
+        <!-- <div class="eplanetee" id="eplanetee">
+            <div class="line"></div>
+            <div class="circle"></div>
+            <div class="op">
+                <div class="opline top"></div>
+                <div class="opline bottom"></div>
+            </div>
+        </div> -->
+        <!-- <div class="hplanetee" id="hplanetee">
+            <div class="line"></div>
+            <div class="square"></div>
+            <div class="op">
+                <div class="opline top"></div>
+                <div class="opline bottom"></div>
+            </div>
+        </div> -->
+        <div class="output" id="output">
+            <!-- <p>P1= <script></script></p> -->
+        </div>
+    </div>
+</body>
+</html>
