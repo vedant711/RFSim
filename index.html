@@ -6,11 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="calc.js"></script>
+    <!-- <script src="jquery-3.6.0.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>RF Simulation Tool</title>
 </head>
 <body>
     <script>
+        
         let p1,p2;
+        let last_selected=0;
+        let comp_num=0;
+        var canvas = document.getElementById('canvas');
+        let select_id;
+        
+        
+        // const onClick = (event) => {
+        //     select_id = event.srcElement.id;
+        //     // console.log(select_id)
+        // }
+        // edit.addEventListener('click', onClick);
+        const getId = (id) => {
+            select_id = parseInt(id);
+            if (output_arr[select_id][0] === 2) {
+                document.getElementById('edeplane').style.display='block';
+
+            } else if (output_arr[select_id][0] === 3) {
+                document.getElementById('edhplane').style.display='block';
+
+            } else {
+                document.getElementById('edwave').style.display='block';
+            }
+            console.log(select_id)
+        }
+        // $(".editele").click(function() {
+        //         var t = $(this).attr('id');
+        //         // $('#GFG_DOWN').text("ID = " + t);
+        //         console.log(t)
+        // })
+
+
+        
+
+        let output_arr = []
         let eplanetee_calc = (z1,z2,pin) => {
             console.log(pin)
             let rho1 = (z1-50)/(z1+50);
@@ -23,6 +60,11 @@
             document.getElementById('ei').style.display='none';
             document.getElementById('eaw').style.display='none';
             document.getElementById('eae').style.display='none';
+            last_selected=2;
+            let arr=[last_selected,pin,z1,z2,p1,p2]
+            output_arr.push(arr)
+            // alert(output_arr)
+
         }
 
         let select_ip_eplane_wave = (pin,il) => {
@@ -38,6 +80,7 @@
             if (pin_value==='1') {
                 console.log(p1)
                 waveguide_calc(p1,il)
+                
             }
             else {
                 console.log(p2)
@@ -105,6 +148,10 @@
             document.getElementById('hi').style.display='none';
             document.getElementById('haw').style.display='none';
             document.getElementById('hah').style.display='none';
+            last_selected=3;
+            let arr=[last_selected,pin,z1,z2,p1,p2]
+            output_arr.push(arr)
+            console.log(output_arr)
 
         }
 
@@ -117,10 +164,257 @@
             document.getElementById('wi').style.display='none';
             document.getElementById('waw').style.display='none';
             document.getElementById('wae').style.display='none';
+            last_selected=1;
+            let arr=[last_selected,pin,il,p1]
+            output_arr.push(arr)
+            console.log(output_arr)
         }
 
+        let edit_output_eplane = (z1,z2) => {
+            // let i;
+            let old_eplane = output_arr[select_id];
+            console.log(old_eplane)
+            let t1 = old_eplane[4]; let t2 = old_eplane[5];
+            if (select_id != 0) {
+                let new_pin = output_arr[select_id][1];
+                console.log(new_pin)
+                output_arr.splice(select_id,1);
+                console.log(output_arr)
+                
+                eplanetee_calc(z1,z2,new_pin);
+
+                // prev_ele = output_arr[]
+            }else {
+                let new_pin = output_arr[0][1];
+                output_arr.splice(0,1)
+                eplanetee_calc(z1,z2,new_pin);
+            }
+            // console.log(select_id+1, output_arr.length)
+            let i = select_id;
+            for (let count=select_id+1;count<output_arr.length;count++){
+                // console.log('hi')
+                let curr_ele = output_arr[i];
+                if (curr_ele[0]===1) {
+                    // waveguide_calc
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3) {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][4], curr_ele[2])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][5], curr_ele[2])
+                        }
+                    } else {
+                        output_arr.splice(select_id,1)
+                        waveguide_calc(output_arr[output_arr.length-1][3],curr_ele[2]);
+                    }
+                    
+                    
+                    // if (curr_ele[1]===t1){
+                    //     waveguide_calc(output_arr[-1][])
+                    // }
+                }else if (curr_ele[0]===2){
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(select_id,1);
+                        eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];       
+
+                } else {
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(i,1);
+                        hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];
+                }
+            } 
+            document.getElementById('edeplane').style.display="none";
+            console.log(output_arr)
+
+        }
+
+        let edit_output_hplane = (z1,z2) => {
+            // let i;
+            console.log(output_arr)
+            let old_hplane = output_arr[select_id];
+            console.log(old_hplane)
+            let t1 = old_hplane[4]; let t2 = old_hplane[5];
+            if (select_id != 0) {
+                let new_pin = output_arr[select_id][1];
+                console.log(new_pin)
+                output_arr.splice(select_id,1);
+                console.log(output_arr)
+                
+                hplanetee_calc(z1,z2,new_pin);
+
+                // prev_ele = output_arr[]
+            }else {
+                let new_pin = output_arr[0][1];
+                output_arr.splice(0,1)
+                hplanetee_calc(z1,z2,new_pin);
+            }
+            // console.log(select_id+1, output_arr.length)
+            let i = select_id;
+            for (let count=select_id+1;count<output_arr.length;count++){
+                // console.log('hi')
+                let curr_ele = output_arr[i];
+                if (curr_ele[0]===1) {
+                    // waveguide_calc
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3) {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][4], curr_ele[2])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][5], curr_ele[2])
+                        }
+                    } else {
+                        output_arr.splice(select_id,1)
+                        waveguide_calc(output_arr[output_arr.length-1][3],curr_ele[2]);
+                    }
+                    
+                    
+                    // if (curr_ele[1]===t1){
+                    //     waveguide_calc(output_arr[-1][])
+                    // }
+                }else if (curr_ele[0]===2){
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(select_id,1);
+                        eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];       
+
+                } else {
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(i,1);
+                        hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];
+                }
+            } 
+            document.getElementById('edhplane').style.display="none";
+            console.log(output_arr)
+
+        }
+
+        let edit_output_waveguide = (il) => {
+            let old_wave = output_arr[select_id];
+            let t1; let t2;
+            if (select_id!=0) {
+                let new_pin = output_arr[select_id][1];
+                output_arr.splice(select_id,1);
+                waveguide_calc(new_pin,il);
+            }
+            let i = select_id;
+            for (let count=select_id+1;count<output_arr.length;count++){
+                // console.log('hi')
+                let curr_ele = output_arr[i];
+                if (curr_ele[0]===1) {
+                    // waveguide_calc
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3) {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][4], curr_ele[2])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            waveguide_calc(output_arr[output_arr.length-1][5], curr_ele[2])
+                        }
+                    } else {
+                        output_arr.splice(select_id,1)
+                        waveguide_calc(output_arr[output_arr.length-1][3],curr_ele[2]);
+                    }
+                    
+                    
+                    // if (curr_ele[1]===t1){
+                    //     waveguide_calc(output_arr[-1][])
+                    // }
+                }else if (curr_ele[0]===2){
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(select_id,1);
+                            eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(select_id,1);
+                        eplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];       
+
+                } else {
+                    if (output_arr[output_arr.length-1][0]===2 || output_arr[output_arr.length-1][0]===3)  {
+                        if (curr_ele[1]===t1) {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][4])
+                        } else {
+                            output_arr.splice(i,1);
+                            hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][5])
+                        }
+
+                    } else {
+                        output_arr.splice(i,1);
+                        hplanetee_calc(curr_ele[2],curr_ele[3],output_arr[output_arr.length-1][3]);
+                    }
+                    t1 = output_arr[output_arr.length-1][4];
+                    t1 = output_arr[output_arr.length-1][5];
+                }
+            } 
+            document.getElementById('edwave').style.display="none";
+            console.log(output_arr)
+
+        }
+        
+ 
+    
+        
 
     </script>
+    
+    
     <div class="nav-bar">
         <div class="nav-elements">
             <div class="drop file">
@@ -137,6 +431,12 @@
                     <p id="w">Waveguide</p>
                     <p id="e">E Plane Tee</p>
                     <p id="h">H Plane Tee</p>
+                </div>
+            </div>
+            <div class="drop draw" id="editbox">
+                <h3>Edit Components</h3>
+                <div class="drop-content draw-content" id="edit">
+                    
                 </div>
             </div>
         </div>
@@ -211,6 +511,27 @@
             <button onclick="hplanetee_calc(parseInt(document.getElementById('z1haw').value),parseInt(document.getElementById('z2haw').value),p1)">Gaand ma Gaalne</button>
 
         </div>
+
+        <div class="edit-eplane" id="edeplane" style="display: none;">
+            <h2>Edit E Plane Tee</h2>
+            <input type="number" name="z1edep" id="z1edep" placeholder="Enter Z1">
+            <input type="number" name="z2edep" id="z2edep" placeholder="Enter Z2">
+            <button onclick="edit_output_eplane(parseInt(document.getElementById('z1edep').value),parseInt(document.getElementById('z2edep').value))">Gaand ma Gaalne</button>
+        </div>
+
+        <div class="edit-hplane" id="edhplane" style="display: none;">
+            <h2>Edit H Plane Tee</h2>
+            <input type="number" name="z1edhp" id="z1edhp" placeholder="Enter Z1">
+            <input type="number" name="z2edhp" id="z2edhp" placeholder="Enter Z2">
+            <button onclick="edit_output_hplane(parseInt(document.getElementById('z1edhp').value),parseInt(document.getElementById('z2edhp').value))">Gaand ma Gaalne</button>
+        </div>
+
+        <div class="edit-wave" id="edwave" style="display: none;">
+            <h2>Edit Waveguide</h2>
+            <input type="number" name="iledwave" id="iledwave" placeholder="Enter Insertion Loss">
+            <button onclick="edit_output_waveguide(parseInt(document.getElementById('iledwave').value))">Gaand ma Gaalne</button>
+        </div>
+
 
         <!-- <div class="waveguide" id="waveguide">
             <div class="line"></div>
