@@ -1,39 +1,58 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Regular.ttf');
+}
+
 *{
     margin:0;
     padding: 0;
     top:0;
-    left:0
+    left:0;
+    font-family: 'Roboto';
+
 }
 
 body{
     min-height: 100vh;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
 
 .nav-bar{
-    height: 71px;
-    background-color: #D9D9D9;
+    height: 55px;
+    /* background-color: #dbdada; */
     zoom: 80%; 
-    border-radius: 0px 0px 25px 25px;
-    box-shadow: 0px 10px 20px 2px rgba(255, 255, 255, 0.25);
+    /* border-radius: 0px 0px 25px 25px; */
+    box-shadow: 0px 5px 20px 2px rgba(255, 255, 255, 0.25);
     width: 100%;
+    background: -webkit-linear-gradient(
+		top,
+		#ffffff 0%,
+		#dddddd 50%,
+		#cacaca 92%,
+		#ececec);
 
 }
 
 .nav-bar .nav-elements {
     display:flex;
     width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    /* font-family: 'Courier New', Courier, monospace; */
+    /* font-size: 10px; */
 }
 
 .nav-bar .nav-elements .drop {
     /* display: inline-block; */
     position: relative;
-    padding: 20px;
-    font-size: 20px;
+    /* padding: 20px; */
+    font-size: 15px;
     cursor: pointer;
     margin-left: 10px;
     margin-right: 15px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 19px;
 
 }
 
@@ -44,10 +63,13 @@ body{
     min-width: 160px;
     margin-top: 50px;
     padding-top: 20px;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     padding-right: 25px;
-    margin-left: 15px;
-    background-color: #d9d9d9;
+    /* margin-left: 15px; */
+    background-color: #dbdada;
+    border-radius: 0px 0px 5px 5px;
+    /* transition: 1s; */
+
     /* text-align: center; */
 }
 
@@ -60,19 +82,31 @@ body{
 }
 
 .drop-content p:hover {
-    background-color: #858585;
+    background-color: #a0a0a0;
+    transition: 1s;
+}
+
+.draw:hover {
+    background-color: #a0a0a0;
+    transition: 0.5s;
+
 }
 
 .draw:hover .draw-content{
     display: block;
+    transition: 1s;
+    /* background-color: #858585; */
+
 }
 
 .file:hover .file-content{
     display: block;
+    transition: 1s;
+
 }
 
 .canvas {
-    background-color: black;
+    /* background-color: black; */
     width: 100%;
     display:flex;
     /* min-height: 100%; */
@@ -82,11 +116,17 @@ body{
 
 .canvas .output {
     position: absolute;
-    width: 233px;
-    height: 160px;
-    background-color: #D9D9D9;
-    top: 469px;
-    left: 1130px;
+    width: 190px;
+    height: 130px;
+    background-color: #1d1d1d;
+    top: 499px;
+    left: 1176px;
+    color: white;
+}
+
+.canvas .output p {
+    font-size: 12px;
+    margin: 5px;
 }
 
 .waveguide {
@@ -188,4 +228,37 @@ body{
 
 .hplanetee .bottom {
     margin-top: 36px;
+}
+
+.form {
+    width: 15%;
+    /* height: ; */
+    background-color: #cacaca;
+    text-align: center;
+    padding: 50px;
+    border-radius: 15px;
+    margin-left: 40%;
+    margin-top: 110px;
+}
+
+.form h2 {
+    margin-bottom: 10px;
+}
+
+
+.form input[type=number] {
+    padding: 15px;
+    margin: 10px;
+}
+
+.form input[type=radio] {
+    padding: 15px;
+    margin: 10px;
+}
+
+.form button {
+    padding: 10px;
+    cursor: pointer;
+    /* border: none; */
+    /* outline: none; */
 }
