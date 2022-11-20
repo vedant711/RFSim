@@ -150,8 +150,39 @@ body{
 .waveguide .rectangle {
     width: 200px;
     height: 50px;
+    text-align: center;
+    color: white;
     border: 1px solid #ffffff;
 }
+
+.powerin {
+    display:flex;
+    position: absolute;
+    margin-top: 100px;
+    zoom:80%;
+}
+
+.powerin .line {
+    width: 30px;
+    height: 0px;
+    margin-top:25px;
+    border: 1px solid #ffffff;
+}
+
+.powerin .circle {
+    text-align: center;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ffffff;
+    border-radius:100%;
+    /* transform: translate(-25px);  */
+    
+
+    /* transform: rotate(-90deg); */
+}
+
+
 
 .eplanetee {
     display:flex;
@@ -188,6 +219,8 @@ body{
 .eplanetee .circle {
     width: 50px;
     height: 50px;
+    text-align: center;
+    color: white;
     border: 1px solid #ffffff;
     border-radius:100%;
     /* transform: translate(-25px);  */
@@ -213,6 +246,8 @@ body{
 .hplanetee .square {
     width: 50px;
     height: 50px;
+    text-align: center;
+    color: white;
     border: 1px solid #ffffff;
 }
 
@@ -223,11 +258,11 @@ body{
 }
 
 .hplanetee .top {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .hplanetee .bottom {
-    margin-top: 36px;
+    margin-top: 28px;
 }
 
 .form {
@@ -239,6 +274,8 @@ body{
     border-radius: 15px;
     margin-left: 40%;
     margin-top: 110px;
+    position: absolute;
+    z-index: 100;
 }
 
 .form h2 {

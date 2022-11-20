@@ -19,6 +19,8 @@
         let comp_num=0;
         let select_id;
         let cl=0;
+        let prev_top='200px'; let prev_right='100px';
+        let input_pin = 0;
         
         // const onClick = (event) => {
         //     select_id = event.srcElement.id;
@@ -70,7 +72,35 @@
                 last_selected=2;
                 let arr=[last_selected,pin,z1,z2,p1,p2]
                 output_arr.push(arr)
-                canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="circle"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
+
+                if (comp_num===1) {
+                    canvas.innerHTML+='<div class="powerin" id="powerin" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="circle">Pin</div><div class="line"></div></div>'
+                    prev_top = document.getElementById('powerin').style.top;
+                    console.log(prev_top)
+                    let comp_width = 80;
+                    let comp_left = document.getElementById('powerin').style.left
+                    prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+                }
+
+                if (input_pin===1) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) - 15) + 'px'
+                }
+                else if (input_pin===2) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) + 15) + 'px'
+                    
+                }
+
+                canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="line"></div><div class="circle">E</div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
+
+                prev_top = document.getElementById(comp_num+'ele').style.top;
+                let comp_width = 110;
+                let comp_left = document.getElementById(comp_num+'ele').style.left
+                prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+
+                console.log(prev_top)
+                console.log(prev_right)
+
+
 
             }
             // alert(output_arr)
@@ -89,13 +119,18 @@
             console.log(pin_value)
             if (pin_value==='1') {
                 console.log(p1)
+                input_pin =1;
                 waveguide_calc(p1,il)
                 
             }
-            else {
+            else if(pin_value==='2'){
                 console.log(p2)
+                input_pin=2;
                 waveguide_calc(p2,il)
+            } else {
+                waveguide_calc(NaN,il)
             }
+            input_pin=0;
 
             
         }
@@ -110,14 +145,21 @@
             console.log(pin_value)
             if (pin_value==='1') {
                 console.log(p1)
+                input_pin=1
                 // waveguide_calc(p1,il)
                 eplanetee_calc(z1,z2,p1)
             }
-            else {
+            else if(pin_value==='2'){
                 console.log(p2)
+                input_pin=2
                 // waveguide_calc(p2,il)
                 eplanetee_calc(z1,z2,p2)
+
+            } else {
+                eplanetee_calc(z1,z2,NaN)
             }
+            input_pin=0;
+
 
             
         }
@@ -132,14 +174,21 @@
             console.log(pin_value)
             if (pin_value==='1') {
                 console.log(p1)
+                input_pin=1;
+
                 // waveguide_calc(p1,il)
                 hplanetee_calc(z1,z2,p1)
             }
-            else {
+            else if(pin_value==='2'){
+                input_pin=2;
+
                 console.log(p2)
                 // waveguide_calc(p2,il)
                 hplanetee_calc(z1,z2,p2)
+            } else {
+                hplanetee_calc(z1,z2,NaN)
             }
+            input_pin=0;
 
             
         }
@@ -168,8 +217,27 @@
                 let arr=[last_selected,pin,z1,z2,p1,p2]
                 output_arr.push(arr)
                 console.log(output_arr)
-                canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="square"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
-
+                if (comp_num===1) {
+                    canvas.innerHTML+='<div class="powerin" id="powerin" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="circle">Pin</div><div class="line"></div></div>'
+                    prev_top = document.getElementById('powerin').style.top;
+                    let comp_width = 80;
+                    let comp_left = document.getElementById('powerin').style.left
+                    prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+                }
+                if (input_pin===1) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) - 15) + 'px'
+                }
+                else if (input_pin===2) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) + 15) + 'px'
+                    
+                }
+                canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="line"></div><div class="square">H</div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
+                prev_top = document.getElementById(comp_num+'ele').style.top;
+                let comp_width = 110;
+                let comp_left = document.getElementById(comp_num+'ele').style.left
+                prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+                console.log(prev_top)
+                console.log(prev_right)
             }
 
         }
@@ -193,8 +261,27 @@
                 let arr=[last_selected,pin,il,p1]
                 output_arr.push(arr)
                 console.log(output_arr)
-                canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="rectangle"></div><div class="line" ></div></div>';
-
+                if (comp_num===1) {
+                    canvas.innerHTML+='<div class="powerin" id="powerin" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="circle">Pin</div><div class="line"></div></div>'
+                    prev_top = document.getElementById('powerin').style.top;
+                    let comp_width = 80;
+                    let comp_left = document.getElementById('powerin').style.left
+                    prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+                }
+                if (input_pin===1) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) - 15) + 'px'
+                }
+                else if (input_pin===2) {
+                    prev_top = String(parseInt(prev_top.match(/(\d+)/)) + 15) + 'px'
+                    
+                }
+                canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:'+ prev_top +';left:'+ prev_right + '" onmouseover="hover_effect(this.id)" onmouseout="normal_effect()"><div class="line"></div><div class="rectangle">W</div><div class="line" ></div></div>';
+                prev_top = document.getElementById(comp_num+'ele').style.top;
+                let comp_width = 260;
+                let comp_left = document.getElementById(comp_num+'ele').style.left
+                prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
+                console.log(prev_top)
+                console.log(prev_right)
             }
         }
 
@@ -452,13 +539,22 @@
 
         let hover_effect = (id) => {
             // let ele = document.getElementById(id);
+            let output = document.getElementById('output');
+
+            if (id==='powerin') {
+                console.log(id)
+                let ans = output_arr[0]
+                console.log(ans)
+                innerStr = '<p>Initial Power Input</p><p>Pin=' + ans[1] + '</p>'
+                output.innerHTML = '<p>Initial Power Input</p><p>Pin=' + ans[1] + '</p>';
+
+            } else {
             let i1 = id.replace('ele','');
             let index = parseInt(i1);
             console.log(index)
             // document.getElementById('output-ans1').style.display='none';
             // document.getElementById('output-ans2').style.display='none';
             let ans=output_arr[index-1];
-            let output = document.getElementById('output');
             if(ans[0]===2) {
                 output.innerHTML = '<p>E Plane Tee</p><p>Pin=' + ans[1] + '</p><p>Z1='+ans[2]+'</p><p>Z2='+ans[3]+'</p><p>P1='+ans[4]+'</p><p>P2='+ans[5]+'</p>'
             } else if(ans[0]===3) {
@@ -469,17 +565,15 @@
 
             }
         }
+    }
 
         let normal_effect = () => {
             let final_ans = output_arr[output_arr.length-1];
             let output = document.getElementById('output');
-            if(ans[0]===2) {
-                output.innerHTML = '<p>E Plane Tee</p><p>Pin=' + ans[1] + '</p><p>Z1='+ans[2]+'</p><p>Z2='+ans[3]+'</p><p>P1='+ans[4]+'</p><p>P2='+ans[5]+'</p>'
-            } else if(ans[0]===3) {
-                output.innerHTML = '<p>H Plane Tee</p><p>Pin=' + ans[1] + '</p><p>Z1='+ans[2]+'</p><p>Z2='+ans[3]+'</p><p>P1='+ans[4]+'</p><p>P2='+ans[5]+'</p>'
-
-            } else {
-                output.innerHTML = '<p>Waveguide</p><p>Pin=' + ans[1] + '</p><p>Insertion Loss='+ans[2]+'</p><p>Pout='+ans[3]+'</p>'
+            if(final_ans[0]===2 || final_ans[0]===3) {
+                output.innerHTML = '<p>Final Output</p><p>P1='+final_ans[4]+'</p><p>P2='+final_ans[5]+'</p>'
+            }else {
+                output.innerHTML = '<p>Final Output</p><p>Pout='+final_ans[3]+'</p>'
 
             }
         }
@@ -754,6 +848,10 @@
                 <div class="opline top"></div>
                 <div class="opline bottom"></div>
             </div>
+        </div> -->
+        <!-- <div class="powerin" id="powerin">
+            <div class="circle">Pin</div>
+            <div class="line"></div>
         </div> -->
         <div class="output" id="output">
             <!-- <p>P1= <script></script></p> -->
