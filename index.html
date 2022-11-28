@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="calc.js"></script>
+        
+    <script type="text/javascript" src="calc.js"></script>
     <!-- <script src="jquery-3.6.0.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="shortcut icon" href="rf.png" type="image/x-icon">
@@ -40,13 +41,12 @@
             } else {
                 document.getElementById('edwave').style.display='block';
             }
+            let body = document.getElementById('nb');
+            body.classList.add('popup');
+
             console.log(select_id)
         }
-        // $(".editele").click(function() {
-        //         var t = $(this).attr('id');
-        //         // $('#GFG_DOWN').text("ID = " + t);
-        //         console.log(t)
-        // })
+
 
         let eplanetee_edit_calc =(z1,z2,pin) => {
             console.log(z1,z2,pin)
@@ -70,6 +70,8 @@
                 last_selected=2;
                 let arr=[last_selected,pin,z1,z2,p1,p2]
                 output_arr.push(arr)
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
         }
     }
 
@@ -96,6 +98,8 @@
                 last_selected=3;
                 let arr=[last_selected,pin,z1,z2,p1,p2]
                 output_arr.push(arr)
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
             }
         }
 
@@ -117,7 +121,11 @@
                 last_selected=1;
                 let arr=[last_selected,pin,il,p1]
                 output_arr.push(arr)
-                console.log(output_arr)
+                console.log(output_arr);
+                // var body = document.body;
+                // body.classList.remove('popup');
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
             }
         }
         
@@ -172,7 +180,8 @@
                 console.log(prev_top)
                 console.log(prev_right)
 
-
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
 
             }
             // alert(output_arr)
@@ -310,6 +319,8 @@
                 prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
                 console.log(prev_top)
                 console.log(prev_right)
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
             }
 
         }
@@ -354,6 +365,9 @@
                 prev_right = String(comp_width+parseInt(comp_left.match(/(\d+)/))) + 'px';
                 console.log(prev_top)
                 console.log(prev_right)
+                var body = document.getElementById('nb');
+                body.classList.remove('popup')
+
             }
         }
 
@@ -761,9 +775,10 @@
         
 
     </script>
+    <!-- <div class="bground"></div> -->
     
     
-    <div class="nav-bar">
+    <div class="nav-bar" id="nb">
         <div class="nav-elements">
             <!-- <div class="drop file">
                 <h3>File</h3>
@@ -790,12 +805,13 @@
         </div>
     </div>
     <div class="canvas" id="canvas">
+        <!-- <script type="text/javascript" src="calc.js">close_form();</script> -->
         <div class="wave-init form" id="wi" style="display: none;">
             <h2>Waveguide</h2>
             <input type="number" name="p1wi" id="p1wi" placeholder="Enter Input Power">
             <input type="number" name="ilwi" id="ilwi" placeholder="Enter Insertion Loss">
             <button onclick="waveguide_calc(parseInt(document.getElementById('p1wi').value),parseInt(document.getElementById('ilwi').value))">OK</button>
-            <!-- <button onclick="close_form()">Close</button> -->
+            <!-- <button class="close">Close</button> -->
 
         </div>
         <div class="wave-after-wave form" id="waw" style="display: none;">
@@ -823,6 +839,8 @@
             <input type="number" name="z2ei" id="z2ei" placeholder="Enter Z2">
             <button onclick="eplanetee_calc(parseInt(document.getElementById('z1ei').value),parseInt(document.getElementById('z2ei').value),parseInt(document.getElementById('p1ei').value))">OK</button>
             <!-- <button onclick="close_form()">Close</button> -->
+            <!-- <button class="close">Close</button> -->
+
         
         </div>
        

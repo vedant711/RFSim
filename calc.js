@@ -4,29 +4,29 @@ window.onload = () => {
         var wave_button1 = document.getElementById('w');
         var edit = document.getElementById('edit')
         var canvas = document.getElementById('canvas')
-        
+        var body = document.getElementById('nb');
 
 
         wave_button1.onclick = () => {
-            if (last_selected===0) {
+            if (last_selected===0 || comp_num===0) {
             document.getElementById('wi').style.display='block';
             // canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="rectangle"></div><div class="line" ></div></div>';
             
         }
-        if (last_selected===1) {
+        else if (last_selected===1) {
             document.getElementById('waw').style.display='block';
             // canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="rectangle"></div><div class="line"></div></div>';
 
 
         }
 
-        if (last_selected===2) {
+        else if (last_selected===2) {
             document.getElementById('wae').style.display='block';
             // canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="rectangle"></div><div class="line"></div></div>';
 
         }
 
-        if (last_selected===3) {
+        else if (last_selected===3) {
             document.getElementById('wae').style.display='block';
             // canvas.innerHTML+='<div class="waveguide" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="rectangle"></div><div class="line"></div></div>';
 
@@ -35,6 +35,8 @@ window.onload = () => {
         //     n = edit.textContent
         //     console.log(n)
             // if (cl===0) {
+            body.classList.add('popup');
+
                 last_selected=1
 
                 edit.innerHTML += '<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' Waveguide</p>'
@@ -52,31 +54,33 @@ window.onload = () => {
         
 
         ep_button1.onclick = () => {
-            if (last_selected===0) {
+            if (last_selected===0 || comp_num===0) {
             document.getElementById('ei').style.display='block';
             // canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="circle"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             
         }
 
-        if (last_selected===1) {
+        else if (last_selected===1) {
             // canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)"  onmouseout="normal_effect"><div class="line"></div><div class="circle"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             document.getElementById('eaw').style.display='block';
 
 
         }
 
-        if (last_selected===2) {
+        else if (last_selected===2) {
             document.getElementById('eae').style.display='block';
             // canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="circle"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             
         }
 
-        if (last_selected===3) {
+        else if (last_selected===3) {
             document.getElementById('eae').style.display='block';
             // canvas.innerHTML+='<div class="eplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="circle"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
 
         }
         // if (cl===0) {
+            body.classList.add('popup');
+
             last_selected=2
             edit.innerHTML += '<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' E Plane Tee</p>'
             comp_num++;
@@ -87,28 +91,30 @@ window.onload = () => {
         }
 
         hp_button1.onclick = () => {
-            if (last_selected===0) {
+            if (last_selected===0 || comp_num===0) {
             document.getElementById('hi').style.display='block';
             // canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="square"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             
         }
-        if (last_selected===1) {
+        else if (last_selected===1) {
             document.getElementById('haw').style.display='block';
             // canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="square"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
 
 
         }
-        if (last_selected===2) {
+        else if (last_selected===2) {
             document.getElementById('hah').style.display='block';
             // canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="square"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             
         }
-        if (last_selected===3) {
+        else if (last_selected===3) {
             document.getElementById('hah').style.display='block';
             // canvas.innerHTML+='<div class="hplanetee" id="' + comp_num + 'ele" style="top:200px;left:100px" onmouseover="hover_effect(this.id)" onmouseout="normal_effect"><div class="line"></div><div class="square"></div><div class="op"><div class="opline top"></div><div class="opline bottom"></div></div></div>'
             
         }
             // if (cl===0) {
+            body.classList.add('popup');
+
                 last_selected=3
                 // comp_num++;
                 edit.innerHTML += '<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' H Plane Tee</p>'
@@ -119,6 +125,32 @@ window.onload = () => {
             // }
 
         }
+
+        // $('.close').click( () => {
+        //     $('.form').hide()
+        //     // var edit = document.getElementById('edit')
+        //     comp_num--;
+
+        //     let p = edit.innerHTML
+        //     console.log(typeof p)
+        //     console.log('<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' Waveguide</p>')
+        //     if (last_selected===1){
+        //         // let rem = '<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' Waveguide</p>'
+        //         // p.replaceAll(rem,'')
+        //         // console.log('hi')
+        //         p-= '<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' Waveguide</p>';     
+        //     }
+        //         else if (last_selected===2){
+        //             p.replace('<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' E Plane Tee</p>','')
+        //             }
+        //     else if (last_selected===3){
+        //     p.replace('<p id="' + comp_num + '" onclick="getId(this.id)">' + String(comp_num+1) + ' H Plane Tee</p>','')
+        //     }
+        //     var body = document.getElementById('nb');
+        //     body.classList.remove('popup');
+        //     console.log(p)
+
+        // });
 
         // ep_button1.onclick=hplane_call()
         // hp_button1.onclick=eplane_call()
